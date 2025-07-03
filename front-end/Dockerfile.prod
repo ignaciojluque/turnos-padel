@@ -1,0 +1,8 @@
+FROM node:18 AS builder
+WORKDIR /app/front-end
+COPY . .
+RUN npm install && npm run build
+
+FROM nginx:1.25-alpine
+COPY --from=builder /app/front-end/dist /usr/share/nginx/html
+
