@@ -11,6 +11,7 @@ from app.utils.cors_utils import cors_jwt_route
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/login', methods=['POST'])
+@cross_origin()
 def login():
     data = request.get_json()
     email = data.get('email')
@@ -64,6 +65,7 @@ def login():
 
 
 @auth_bp.route('/refresh', methods=['POST'])
+@cross_origin()
 def refresh_access_token():
     refresh_token_cookie = request.cookies.get('refresh_token')
 
@@ -109,6 +111,7 @@ def refresh_access_token():
     }), 200
 
 @auth_bp.route('/logout', methods=['POST'])
+@cross_origin()
 def logout():
     refresh_token_cookie = request.cookies.get('refresh_token')
 
@@ -132,6 +135,7 @@ def logout():
     return response
 
 @auth_bp.route("/registro", methods=["POST"])
+@cross_origin()
 def registrar_usuario():
     print("📥 Llegó una solicitud a /registro")
 
@@ -172,6 +176,7 @@ def registrar_usuario():
     
 
 @auth_bp.route('/recuperar', methods=['POST'])
+@cross_origin()
 def recuperar_password():
     email = request.json.get("email")
     if not email:

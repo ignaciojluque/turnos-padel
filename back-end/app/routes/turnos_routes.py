@@ -454,11 +454,8 @@ def asignar_turno_directo(turno_id):
 
 
 @turnos_bp.route("/comprobantes/<int:turno_id>", methods=["GET", "OPTIONS"])
-@cross_origin()
-@jwt_required
+@cors_jwt_route(methods=["GET"])
 def obtener_comprobante(turno_id):
-    if request.method == "OPTIONS":
-        return '', 200
     usuario = g.usuario_actual
     if not getattr(usuario, "es_admin", False):
         return abort(403, description="Solo accesible para administradores")

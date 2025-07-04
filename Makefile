@@ -1,6 +1,6 @@
 # Variables
-COMPOSE_DEV=docker-compose
-COMPOSE_PROD=docker-compose -f docker-compose.prod.yml
+COMPOSE_DEV=docker compose
+COMPOSE_PROD=docker compose -f docker-compose.prod.yml
 API_BASE=http://localhost:5050
 NODE_ENV=production
 # --- Comandos para producción ---
@@ -15,7 +15,7 @@ build-backend:
 	$(COMPOSE_PROD) build backend
 
 build-frontend:
-	cd front-end && NODE_ENV=$(NODE_ENV) npm run build
+	cd front-end && NODE_ENV=$(NODE_ENV) && npm run build --  --mode $(NODE_ENV)
 	$(COMPOSE_PROD) build frontend
 
 logs:
