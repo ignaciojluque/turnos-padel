@@ -1,8 +1,7 @@
 # Variables
-COMPOSE_DEV=docker compose
+COMPOSE_DEV=docker compose -f docker-compose.dev.yml
 COMPOSE_PROD=docker compose -f docker-compose.prod.yml
-API_BASE=http://localhost:5050
-NODE_ENV=production
+NODE_ENV=development
 # --- Comandos para producción ---
 
 prod-up:

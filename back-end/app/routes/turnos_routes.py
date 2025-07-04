@@ -308,7 +308,7 @@ def subir_comprobante():
             ruta_temporal = tmpfile.name
 
         config = ConfiguracionPago.query.first()
-        es_valido, datos, huella, motivos = procesar_comprobante(ruta_temporal, config=config, modo_flexible=True)
+        es_valido, datos, huella, motivos = procesar_comprobante(ruta_temporal, config=config, modo_flexible=False)
         os.remove(ruta_temporal)
 
     if not es_valido:

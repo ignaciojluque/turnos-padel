@@ -1,2 +1,6 @@
 .env
 *.pem
+
+# Env files
+front-end/.env.development
+front-end/node_modules/

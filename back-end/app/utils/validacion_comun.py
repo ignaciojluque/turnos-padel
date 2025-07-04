@@ -51,8 +51,17 @@ def validar_campos_comunes(datos, config, modo_flexible=False):
     # Fecha válida
     if not fecha:
         errores.append("Falta la fecha")
-    elif not modo_flexible and (datetime.now() - fecha > timedelta(minutes=tiempo_maximo)):
-        errores.append("La fecha está fuera del rango permitido")
+    else:
+        if isinstance(fecha, str):
+            try:
+                fecha = datetime.strptime(fecha, "%d/%m/%Y %H:%M:%S")  # adaptá al formato real de tu parser
+            except ValueError:
+                errores.append("Formato de fecha inválido")
+                fecha = None
+
+        if isinstance(fecha, datetime):
+            if not modo_flexible and (datetime.utcnow() - fecha > timedelta(minutes=tiempo_maximo)):
+                errores.append("La fecha está fuera del rango permitido")
 
     es_valido = len(errores) == 0
 

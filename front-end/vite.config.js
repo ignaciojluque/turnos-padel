@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
 
-// 📁 Ahora los .html están en el root del proyecto (no en /html)
+// 📁 Los .html están en el root del proyecto
 const htmlDir = __dirname
 
 const input = Object.fromEntries(
@@ -28,8 +28,15 @@ export default defineConfig({
     }
   },
   server: {
+    host: '0.0.0.0', // 🔥 para que Docker lo exponga al exterior
+    port: 5173,
+    strictPort: true,
     proxy: {
-      '^/(auth|turnos|profesores|comprobantes)': 'http://localhost:5050'
-    }
+      '^/(auth|turnos|profesores|comprobantes|administrar-profesores|usuarios)': {
+        target: 'http://backend:5050',
+        changeOrigin: true
+      }
+    }    
   }
 })
+
