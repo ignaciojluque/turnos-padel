@@ -184,7 +184,7 @@ export function actualizarEventos(turnos) {
       if (estadoPago === "subido") {
         backgroundColor = "#ffc107"; // 🟡 comprobante subido
         title = "🟡 " + title;
-      } else if (estadoPago === "verificado" || estadoPago === "completo") {
+      } else if (estadoPago === "verificado") {
         backgroundColor = "#198754"; // ✅ comprobante verificado
         title = "✅ " + title;
       } else if (estado !== "libre") {
