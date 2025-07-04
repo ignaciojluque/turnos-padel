@@ -2,11 +2,6 @@ from datetime import datetime, timedelta
 from difflib import SequenceMatcher
 import os
 
-DESTINATARIO_ESPERADO = os.getenv("NOMBRE_DESTINATARIO_PAGO")
-CBU_ESPERADO = os.getenv("CBU_ESPERADO")
-MONTO_ESPERADO = float(os.getenv("MONTO_ESPERADO"))
-TIEMPO_MAXIMO_MINUTOS = int(os.getenv("TIEMPO_MAXIMO_MINUTOS"))
-
 def normalizar_monto(monto_raw):
     try:
         return float(str(monto_raw).replace(",", "."))
