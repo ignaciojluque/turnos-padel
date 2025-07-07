@@ -38,19 +38,40 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   modal.addEventListener("hidden.bs.modal", async () => {
     console.log("📪 Modal cerrado");
+  
+    // 🧼 Limpieza visual
     if (!comprobanteEnProceso) {
       console.log("🧼 Limpiando inputs del modal...");
       document.getElementById("estadoComprobante").innerText = "";
       document.getElementById("comprobanteInput").value = "";
       document.getElementById("preview").innerHTML = "";
     }
-
+  
+    // 🧨 Intentá liberar turno si fue reservado pero no subiste comprobante
+    const turno = getTurnoTemporal();
+    if (turno?.id) {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE}/turnos/${turno.id}/liberar-si-pendiente`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json"
+          }
+        });
+        const data = await res.json();
+        console.log("♻️ Liberación automática al cerrar modal:", data);
+      } catch (err) {
+        console.warn("❌ Error al liberar turno (modal hidden):", err);
+      }
+    }
+  
     try {
       await refrescarSemanaVisible();
     } catch (err) {
       console.error("❌ Error al refrescar calendario tras cierre de modal:", err);
     }
   });
+  
 
   window.addEventListener("focus", async () => {
     const turno = getTurnoTemporal();
